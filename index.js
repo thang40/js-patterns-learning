@@ -1,56 +1,13 @@
-class Car {
-  constructor(doors, engine, color) {
-    this.doors = doors;
-    this.engine = engine;
-    this.color = color;
-  }
-}
+import express from "express";
+import calc from "./structural-patterns/module-pattern";
+import "./structural-patterns/mixins-pattern";
 
-class CarFactory {
-  createCar(type) {
-    switch (type) {
-      case "civic":
-        return new Car(4, "v6", "grey");
-      case "honda":
-        return new Car(2, "v8", "red");
-    }
-  }
-}
+const num = calc();
+const app = express();
+const port = 3000;
 
-class SUV {
-  constructor(doors, engine, color) {
-    this.doors = doors;
-    this.engine = engine;
-    this.color = color;
-  }
-}
+app.get("/", (req, res) => {
+  res.send(`showing number ${num} on port ${port}`);
+});
 
-class SUVFactory {
-  createCar(type) {
-    switch (type) {
-      case "cx5":
-        return new Car(4, "v6", "grey");
-      case "sante fe":
-        return new Car(2, "v8", "red");
-    }
-  }
-}
-
-const carFactory = new CarFactory();
-const suvFactory = new SUVFactory();
-
-const autoManufacture = (type, model) => {
-  switch (type) {
-    case "car":
-      return carFactory.createCar(model);
-    case "suv":
-      return suvFactory.createCar(model);
-
-    default:
-      break;
-  }
-};
-
-const cx5 = autoManufacture("suv", "cx5");
-
-console.log(cx5);
+app.listen(port, () => console.log(`your server is running on port ${port}`));
